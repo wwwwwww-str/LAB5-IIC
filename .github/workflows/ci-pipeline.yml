@@ -1,31 +1,25 @@
-name: CI Pipeline
+name: My GitHub Actions Pipeline
 
 on:
   push:
-    branches:
-      - main  # Запускається тільки для гілки 'main'
+    branches: [main]
   pull_request:
-    branches:
-      - main  # Запускається для pull request'ів на гілку 'main'
+    branches: [main]
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Операційна система для запуску
-
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2  # Діє як checkout репозиторію
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'  # Вказуємо версію Python
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt  # Встановлення залежностей
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: |
-        pytest  # Запуск тестів
-
+      - name: Build Server
+        run: npm run build
