@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Запускається тільки для гілки 'main'
+  pull_request:
+    branches:
+      - main  # Запускається для pull request'ів на гілку 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Операційна система для запуску
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Діє як checkout репозиторію
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Вказуємо версію Python
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Встановлення залежностей
+
+    - name: Run tests
+      run: |
+        pytest  # Запуск тестів
+
